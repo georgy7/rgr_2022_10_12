@@ -1,6 +1,6 @@
+use v5.10;
 use strict;
 use warnings;
-use feature qw(say);
 use utf8;
 
 binmode(STDOUT, ':utf8');
