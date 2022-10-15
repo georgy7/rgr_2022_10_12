@@ -14,6 +14,15 @@ sub new {
     return $self;
 }
 
+sub attack {
+    my ($self, $enemy) = @_;
+    if ($self->is_riding) {
+        $self->poke($enemy);
+    } else {
+        $self->strike($enemy);
+    }
+}
+
 # Верхом.
 sub is_riding {
     my $self = shift;
@@ -40,6 +49,16 @@ sub poke {
         } else {
             $enemy->take_damage(4);
         }
+    }
+}
+
+# Нанести урон мечом.
+# Какой рыцарь без меча?
+sub strike {
+    my ($self, $enemy) = @_;
+    if ($self->is_alive && $enemy->is_alive) {
+        say "$self struck with the sword.";
+        $enemy->take_damage(12);
     }
 }
 

@@ -31,15 +31,15 @@ say 'A knight vs another';
 say "-------------------\n";
 
 {
-    $knight->poke($other);
+    $knight->attack($other);
     show_status($knight, $other);
 
     $knight->saddle();
     show_status($knight, $other);
 
-    $knight->poke($other);
+    $knight->attack($other);
     show_status($knight, $other);
-    $knight->poke($other);
+    $knight->attack($other);
     show_status($knight, $other);
 
     say 'Trying to resuscitate himself...';
@@ -60,7 +60,7 @@ say "----------------------\n";
     say 'Start.';
     show_status($knight, $other, $other->{horse});
 
-    $knight->poke($other->{horse});
+    $knight->attack($other->{horse});
     show_status($knight, $other, $other->{horse});
 }
 
@@ -72,10 +72,10 @@ say "--------------------------------------\n";
 {
     $other = BlackKnight->new();
 
-    $knight->poke($other);
+    $knight->attack($other);
     show_status($knight, $other);
 
-    $knight->poke($other);
+    $knight->attack($other);
     show_status($knight, $other);
 
     say 'Healing...';
@@ -114,33 +114,33 @@ say "-------------------\n";
 {
     my $giant = Giant->new();
 
-    $knight->poke($giant);
+    $knight->attack($giant);
     show_status($knight, $giant);
 
-    $knight->poke($giant);
-    show_status($knight, $giant);
-
-    $giant->bewitch($knight);
-    show_status($knight, $giant);
-
-    $giant->hit($knight);
-    show_status($knight, $giant);
-
-    $knight->poke($giant);
-    show_status($knight, $giant);
-
-    $knight->poke($giant);
+    $knight->attack($giant);
     show_status($knight, $giant);
 
     $giant->bewitch($knight);
     show_status($knight, $giant);
 
-    $giant->hit($knight);
+    $giant->attack($knight);
     show_status($knight, $giant);
 
-    $knight->poke($giant);
+    $knight->attack($giant);
     show_status($knight, $giant);
 
-    $knight->poke($giant);
+    $knight->attack($giant);
+    show_status($knight, $giant);
+
+    $giant->bewitch($knight);
+    show_status($knight, $giant);
+
+    $giant->attack($knight);
+    show_status($knight, $giant);
+
+    $knight->attack($giant);
+    show_status($knight, $giant);
+
+    $knight->attack($giant);
     show_status($knight, $giant);
 }

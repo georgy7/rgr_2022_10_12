@@ -11,6 +11,11 @@ sub new {
     return $self;
 }
 
+sub attack {
+    my ($self, $enemy) = @_;
+    $self->hit($enemy);
+}
+
 # Нанести урон дубиной.
 sub hit {
     my ($self, $enemy) = @_;
