@@ -25,6 +25,7 @@ sub saddle {
     my $self = shift;
     if ($self->is_alive && $self->{horse}->is_alive && !$self->is_riding) {
         # Вероятно, нужно либо подозвать к себе коня, либо подойти к нему. Зависит от того, что это за жанр вообще.
+        say "$self saddled.";
         $self->{riding} = 1;
     }
 }
@@ -33,6 +34,7 @@ sub saddle {
 sub poke {
     my ($self, $enemy) = @_;
     if ($self->is_alive && $enemy->is_alive) {
+        say "$self plunged the spear.";
         if ($self->is_riding) {
             $enemy->take_damage(20);
         } else {

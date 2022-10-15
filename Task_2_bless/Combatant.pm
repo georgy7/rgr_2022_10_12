@@ -44,7 +44,7 @@ sub take_damage {
 sub pass_away {
     my $self = shift;
     $self->{hp} = 0;
-    say "(x_x)";
+    say "$self died.";
 }
 
 # Исцелиться — восстановить свои очки здоровья. Метод не воскрешает.

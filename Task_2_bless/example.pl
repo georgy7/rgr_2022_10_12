@@ -8,103 +8,139 @@ use lib $FindBin::Bin;
 use BlackKnight;
 use Giant;
 
+
+sub show_status {
+    print "\n";
+    foreach (@_) {
+        my @conditions = ();
+        while (my($k, $v) = each %{$_->{conditions}}) {
+            push @conditions, "$k => $v"
+        }
+        printf "  %40s: %.5f%% (%s)\n", $_, (100 * $_->health), join(', ', @conditions)
+    }
+    print "\n";
+}
+
+
 my $knight = BlackKnight->new();
 my $other = BlackKnight->new();
 
-say 'A knight vs another.';
 
-$knight->poke($other);
-say 'K: ' . $knight->health . ', O: ' . $other->health;
+print "\n\n";
+say 'A knight vs another';
+say "-------------------\n";
 
-$knight->saddle();
-say 'K: ' . $knight->health . ', O: ' . $other->health;
+{
+    $knight->poke($other);
+    show_status($knight, $other);
 
-$knight->poke($other);
-say 'K: ' . $knight->health . ', O: ' . $other->health;
-$knight->poke($other);
-say 'K: ' . $knight->health . ', O: ' . $other->health;
+    $knight->saddle();
+    show_status($knight, $other);
 
-say 'Trying to heal himself...';
+    $knight->poke($other);
+    show_status($knight, $other);
+    $knight->poke($other);
+    show_status($knight, $other);
 
-$other->recover(1);
-say 'K: ' . $knight->health . ', O: ' . $other->health;
-$other->recover();
-say 'K: ' . $knight->health . ', O: ' . $other->health;
+    say 'Trying to resuscitate himself...';
 
-say '---------';
+    $other->recover(1);
+    show_status($knight, $other);
+    $other->recover();
+    show_status($knight, $other);
+}
 
-say 'A knight vs a warhorse.';
 
-$other = BlackKnight->new();
-say 'K: ' . $knight->health . ', O: ' . $other->health . ', OH: ' . $other->{horse}->health;
+print "\n\n";
+say 'A knight vs a warhorse';
+say "----------------------\n";
 
-$knight->poke($other->{horse});
-say 'K: ' . $knight->health . ', O: ' . $other->health . ', OH: ' . $other->{horse}->health;
+{
+    $other = BlackKnight->new();
+    say 'Start.';
+    show_status($knight, $other, $other->{horse});
 
-say '---------';
+    $knight->poke($other->{horse});
+    show_status($knight, $other, $other->{horse});
+}
 
-$other = BlackKnight->new();
 
-$knight->poke($other);
-say 'K: ' . $knight->health . ', O: ' . $other->health;
+print "\n\n";
+say 'Knight vs knight who knows how to heal';
+say "--------------------------------------\n";
 
-$knight->poke($other);
-say 'K: ' . $knight->health . ', O: ' . $other->health;
+{
+    $other = BlackKnight->new();
 
-say 'Healing...';
+    $knight->poke($other);
+    show_status($knight, $other);
 
-$other->recover(1);
-say 'K: ' . $knight->health . ', O: ' . $other->health;
-$other->recover(1);
-say 'K: ' . $knight->health . ', O: ' . $other->health;
-$other->recover();
-say 'K: ' . $knight->health . ', O: ' . $other->health;
+    $knight->poke($other);
+    show_status($knight, $other);
 
-say '---------';
+    say 'Healing...';
 
-say $knight->has_condition('sdfsdf');
+    $other->recover(1);
+    show_status($knight, $other);
+    $other->recover(1);
+    show_status($knight, $other);
+    $other->recover();
+    show_status($knight, $other);
+}
 
-$knight->be_affected('sdfsdf', 0.2);
-say $knight->has_condition('sdfsdf');
 
-$knight->be_affected('sdfsdf', 0.1);
-say $knight->has_condition('sdfsdf');
+print "\n\n";
+say 'Getting a condition';
+say "-------------------\n";
 
-$knight->be_affected('sdfsdf', 200);
-say $knight->has_condition('sdfsdf');
+{
+    show_status($knight);
 
-say '---------';
-say 'A knight vs a giant.';
+    $knight->be_affected('sdfsdf', 0.2);
+    show_status($knight);
 
-my $giant = Giant->new();
+    $knight->be_affected('sdfsdf', 0.1);
+    show_status($knight);
 
-$knight->poke($giant);
-say 'K: ' . $knight->health . ' (' . $knight->has_condition('bewitched') . ')' . ', G: ' . $giant->health;
+    $knight->be_affected('sdfsdf', 200);
+    show_status($knight);
+}
 
-$knight->poke($giant);
-say 'K: ' . $knight->health . ' (' . $knight->has_condition('bewitched') . ')' . ', G: ' . $giant->health;
 
-$giant->bewitch($knight);
-say 'K: ' . $knight->health . ' (' . $knight->has_condition('bewitched') . ')' . ', G: ' . $giant->health;
+print "\n\n";
+say 'A knight vs a giant';
+say "-------------------\n";
 
-$giant->hit($knight);
-say 'K: ' . $knight->health . ' (' . $knight->has_condition('bewitched') . ')' . ', G: ' . $giant->health;
+{
+    my $giant = Giant->new();
 
-$knight->poke($giant);
-say 'K: ' . $knight->health . ' (' . $knight->has_condition('bewitched') . ')' . ', G: ' . $giant->health;
+    $knight->poke($giant);
+    show_status($knight, $giant);
 
-$knight->poke($giant);
-say 'K: ' . $knight->health . ' (' . $knight->has_condition('bewitched') . ')' . ', G: ' . $giant->health;
+    $knight->poke($giant);
+    show_status($knight, $giant);
 
-$giant->bewitch($knight);
-say 'K: ' . $knight->health . ' (' . $knight->has_condition('bewitched') . ')' . ', G: ' . $giant->health;
+    $giant->bewitch($knight);
+    show_status($knight, $giant);
 
-$giant->hit($knight);
-say 'K: ' . $knight->health . ' (' . $knight->has_condition('bewitched') . ')' . ', G: ' . $giant->health;
+    $giant->hit($knight);
+    show_status($knight, $giant);
 
-$knight->poke($giant);
-say 'K: ' . $knight->health . ' (' . $knight->has_condition('bewitched') . ')' . ', G: ' . $giant->health;
+    $knight->poke($giant);
+    show_status($knight, $giant);
 
-$knight->poke($giant);
-say 'K: ' . $knight->health . ' (' . $knight->has_condition('bewitched') . ')' . ', G: ' . $giant->health;
+    $knight->poke($giant);
+    show_status($knight, $giant);
 
+    $giant->bewitch($knight);
+    show_status($knight, $giant);
+
+    $giant->hit($knight);
+    show_status($knight, $giant);
+
+    $knight->poke($giant);
+    show_status($knight, $giant);
+
+    $knight->poke($giant);
+    show_status($knight, $giant);
+}

@@ -15,6 +15,7 @@ sub new {
 sub hit {
     my ($self, $enemy) = @_;
     if ($self->is_alive && $enemy->is_alive) {
+        say "$self hit the enemy with a club.";
         $enemy->take_damage(20);
     }
 }
@@ -23,6 +24,7 @@ sub hit {
 sub bewitch {
     my ($self, $enemy) = @_;
     if ($self->is_alive && $enemy->is_alive) {
+        say "$self bewitched the enemy.";
         $enemy->be_affected('bewitched', 0.25);
     }
 }
