@@ -1,15 +1,17 @@
 use v5.10;
 use strict;
 use warnings;
-use Destrier;
 
-package BlackKnight;
-use parent 'Combatant';
+package Units::BlackKnight;
+use parent 'Units::Combatant';
+
+use Units::Destrier;
+use Behaviour::Perks;
 
 sub new {
     my $class = shift;
-    my $self = $class->SUPER::new(44);
-    $self->{horse} = Destrier->new();
+    my $self = $class->SUPER::new(44, 12, [ Behaviour::Perks->REGENERATE ]);
+    $self->{horse} = Units::Destrier->new();
     $self->{riding} = 0;
     return $self;
 }
@@ -45,9 +47,9 @@ sub poke {
     if ($self->is_alive && $enemy->is_alive) {
         say "$self plunged the spear.";
         if ($self->is_riding) {
-            $enemy->take_damage(20);
+            $enemy->change_health(-20);
         } else {
-            $enemy->take_damage(4);
+            $enemy->change_health(-4);
         }
     }
 }
@@ -58,7 +60,7 @@ sub strike {
     my ($self, $enemy) = @_;
     if ($self->is_alive && $enemy->is_alive) {
         say "$self struck with the sword.";
-        $enemy->take_damage(12);
+        $enemy->change_health(-12);
     }
 }
 

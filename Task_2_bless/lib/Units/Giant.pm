@@ -2,12 +2,14 @@ use v5.10;
 use strict;
 use warnings;
 
-package Giant;
-use parent 'Combatant';
+package Units::Giant;
+use parent 'Units::Combatant';
+
+use Behaviour::Perks;
 
 sub new {
     my $class = shift;
-    my $self = $class->SUPER::new(120);
+    my $self = $class->SUPER::new(120, 10, [ Behaviour::Perks->BEWITCH ]);
     return $self;
 }
 
@@ -21,16 +23,7 @@ sub hit {
     my ($self, $enemy) = @_;
     if ($self->is_alive && $enemy->is_alive) {
         say "$self hit the enemy with a club.";
-        $enemy->take_damage(20);
-    }
-}
-
-# Околдовать.
-sub bewitch {
-    my ($self, $enemy) = @_;
-    if ($self->is_alive && $enemy->is_alive) {
-        say "$self bewitched the enemy.";
-        $enemy->be_affected('bewitched', 0.25);
+        $enemy->change_health(-20);
     }
 }
 
