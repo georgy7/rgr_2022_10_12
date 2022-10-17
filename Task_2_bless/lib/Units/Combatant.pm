@@ -110,7 +110,7 @@ sub use_perk {
     my $perk = shift;
     my @combatants = @_;
 
-    croak "This unit doesn't, how to do that." unless grep { $_ == $perk } @{$self->perks};
+    croak "This unit doesn't know, how to do that." unless grep { $_ == $perk } @{$self->perks};
     croak 'Estimate flag must be equal to 0 or 1.' unless (0 == $estimate) || (1 == $estimate);
 
     my @filtered = ();

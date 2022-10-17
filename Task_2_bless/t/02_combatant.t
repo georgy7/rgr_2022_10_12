@@ -20,7 +20,7 @@ subtest 'not abstract' => sub {
 };
 
 subtest 'identification' => sub {
-    my $lora = Units::Combatant->new(100, 12);
+    my $lorna = Units::Combatant->new(100, 12);
     my $derek = Units::Combatant->new(100, 12);
     my $richard = Units::Combatant->new(100, 12);
     my $sarah = Units::Combatant->new(100, 12);
@@ -30,18 +30,18 @@ subtest 'identification' => sub {
 
     is(1, $sarah->team());
 
-    ok($lora->identify($lora)       & Units::Relation->SELF, 'self-identification of Lora');
+    ok($lorna->identify($lorna)     & Units::Relation->SELF, 'self-identification of Lorna');
     ok($derek->identify($derek)     & Units::Relation->SELF, 'self-identification of Derek');
     ok($richard->identify($richard) & Units::Relation->SELF, 'self-identification of Richard');
     ok($sarah->identify($sarah)     & Units::Relation->SELF, 'self-identification of Sarah');
 
-    ok($lora->identify($lora)       & Units::Relation->ALLY, 'Lora is sane.');
+    ok($lorna->identify($lorna)     & Units::Relation->ALLY, 'Lorna is sane.');
     ok($derek->identify($derek)     & Units::Relation->ALLY, 'Derek is sane.');
     ok($richard->identify($richard) & Units::Relation->ALLY, 'Richard is sane.');
     ok($sarah->identify($sarah)     & Units::Relation->ALLY, 'Sarah is sane.');
 
-    is(0, $lora->identify($derek),   'Lora, Derek: neutral');
-    is(0, $lora->identify($richard), 'Lora, Richard: neutral');
+    is(0, $lorna->identify($derek),   'Lorna, Derek: neutral');
+    is(0, $lorna->identify($richard), 'Lorna, Richard: neutral');
 
     ok($richard->identify($sarah) & Units::Relation->ALLY, "Sarah is Richard's ally.");
     ok($sarah->identify($richard) & Units::Relation->ALLY, "Richard is Sarah's ally.");
