@@ -1,1 +1,10 @@
-Run script/phonebook_server.pl to test the application.
+﻿Перед запуском может потребоваться выполнить из консоли следующую строчку, если Catalyst установлен
+в текущего пользователя. Можно добавить в .bash_profile или .bashrc, наверно.
+
+eval "$(perl -I$HOME/perl5/lib/perl5/ -Mlocal::lib)"
+
+Запуск приложения:
+script/phonebook_server.pl --host=127.0.0.1
+
+Запуск с автоматической подгрузкой кода:
+script/phonebook_server.pl --host=127.0.0.1 -r
