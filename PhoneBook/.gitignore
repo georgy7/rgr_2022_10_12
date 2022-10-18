@@ -4,3 +4,6 @@ MYMETA.yml
 Makefile
 blib/
 inc/
+
+db/phonebook-schema.db
+db/phonebook-schema/

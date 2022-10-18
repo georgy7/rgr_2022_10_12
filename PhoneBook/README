@@ -8,3 +8,45 @@ script/phonebook_server.pl --host=127.0.0.1
 
 Запуск с автоматической подгрузкой кода:
 script/phonebook_server.pl --host=127.0.0.1 -r
+
+
+Версионирование базы
+--------------------
+
+Во-первых, пришлось кое-что доустановить:
+cpanm Catalyst::Helper::Model::DBIC::Schema
+cpanm MooseX::NonMoose
+cpanm DBIx::Class::Migration
+
+Создание БД:
+
+    mkdir db
+    script/phonebook_create.pl model DB DBIC::Schema PhoneBook::Schema create=static dbi:SQLite:db/phonebook-schema.db
+
+Затем в файле Schema.pm нужно прописать версию. Она должна быть целым числом, и версии должны идти подряд,
+вероятно чтобы гарантировать, что не произойдёт параллельных модификаций. Это проверяет DBIx::Class::DeploymentHandler.
+
+Если это только что созданный проект, ему нужно создать папки db/fixtures/, db/migrations/
+и наполнить их файлами. За это отвечает команда prepare.
+
+    dbic-migration -I lib -S PhoneBook::Schema --target_dir=db prepare
+
+Команда prepare при первом запуске выведет примерно следующее.
+
+    There is no current database deployed, so I can't prepare upgrades
+    or downgrades
+
+Это значит, что в базе отсутствует служебная таблица этого инструмента версионирования.
+Её нужно создать командой install:
+
+    dbic-migration -I lib -S PhoneBook::Schema --target_dir=db install
+
+Это описано в perldoc DBIx::Class::Migration::Tutorial::FirstMigration.
+Вообще, процесс написания миграций описан
+в perldoc DBIx::Class::Migration::Tutorial::SecondMigration
+и perldoc DBIx::Class::Migration::Tutorial::ThirdMigration.
+
+Про методы DBIx::Class можно почитать здесь:
+https://metacpan.org/dist/DBIx-Class/view/lib/DBIx/Class/Manual/Cookbook.pod
+https://eax.me/dbix-class/
+http://pragmaticperl.com/issues/22/pragmaticperl-22-dbixclass.-%D1%81%D0%B1%D0%BE%D1%80%D0%BD%D0%B8%D0%BA-%D1%80%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D0%BE%D0%B2.html
