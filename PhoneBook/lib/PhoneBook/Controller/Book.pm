@@ -15,15 +15,8 @@ BEGIN { extends 'Catalyst::Controller'; }
 sub book : GET Path('') Chained CaptureArgs(1) {
     my ( $self, $c, $book_id ) = @_;
 
-    # Model возвращает DBIx::Class::ResultSet.
-    my $book = $c->model('DB::Book')->find($book_id);
-
-    if ($book) {
-
-        # Чтобы передать в chained-метод.
-        $c->stash->{resultset} = $book;
-
-        $c->stash->{id} = $book_id;
+    if ($c->model('Book')->has_id($c, $book_id)) {
+        $c->stash->{book_id} = $book_id;
         $c->stash->{template} = 'book/index.tt';
     } else {
         $c->response->status(404);
@@ -32,29 +25,17 @@ sub book : GET Path('') Chained CaptureArgs(1) {
 }
 
 sub records : GET Chained(book) {
-    my ( $self, $c ) = @_;
+    my ($self, $c) = @_;
+    my $book_id = $c->stash->{book_id};
 
-    my $book = $c->stash->{resultset};
-
-    if ($book) {
-
-        my $records_rs = $c->model('DB::BookRecord')->search({
-            book_id => $book->book_id
-        }, {
-            order_by => [ 'name' ]
-        });
-
-        $records_rs->result_class('DBIx::Class::ResultClass::HashRefInflator');
-        my @list = $records_rs->all();
-
-        %{$c->stash} = ();
-        $c->stash(result => \@list);
-        $c->forward('PhoneBook::View::JSON');
-
+    if ($book_id) {
+        $c->stash(result => $c->model('BookRecord')->find_by_book_id($c, $book_id));
     } else {
-        $c->response->status(404);
-        $c->response->body("The book is not found. *");
+        $c->stash(result => [], error => 1);
     }
+
+    delete $c->stash->{template};
+    $c->forward('PhoneBook::View::JSON');
 }
 
 __PACKAGE__->meta->make_immutable;
