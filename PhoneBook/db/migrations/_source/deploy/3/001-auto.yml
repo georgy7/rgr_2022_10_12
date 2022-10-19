@@ -1,0 +1,136 @@
+---
+schema:
+  procedures: {}
+  tables:
+    book:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - book_id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+      fields:
+        book_id:
+          data_type: integer
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: book_id
+          order: 1
+          size:
+            - 0
+        created:
+          data_type: timestamp
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: created
+          order: 2
+          size:
+            - 0
+      indices: []
+      name: book
+      options: []
+      order: 1
+    book_record:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - book_record_id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - book_id
+          match_type: ''
+          name: book_record_fk_book_id
+          on_delete: ''
+          on_update: CASCADE
+          options: []
+          reference_fields:
+            - book_id
+          reference_table: book
+          type: FOREIGN KEY
+      fields:
+        book_id:
+          data_type: integer
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: book_id
+          order: 2
+          size:
+            - 0
+        book_record_id:
+          data_type: integer
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: book_record_id
+          order: 1
+          size:
+            - 0
+        name:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: name
+          order: 3
+          size:
+            - 0
+        phone:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: phone
+          order: 4
+          size:
+            - 20
+      indices:
+        - fields:
+            - book_id
+          name: book_record_idx_book_id
+          options: []
+          type: NORMAL
+      name: book_record
+      options: []
+      order: 2
+  triggers: {}
+  views: {}
+translator:
+  add_drop_table: 0
+  filename: ~
+  no_comments: 0
+  parser_args:
+    sources:
+      - Book
+      - BookRecord
+  parser_type: SQL::Translator::Parser::DBIx::Class
+  producer_args: {}
+  producer_type: SQL::Translator::Producer::YAML
+  show_warnings: 0
+  trace: 0
+  version: 1.62
