@@ -10,13 +10,18 @@ script/phonebook_server.pl --host=127.0.0.1
 script/phonebook_server.pl --host=127.0.0.1 -r
 
 
-Версионирование базы
---------------------
+Доп. зависимости
+----------------
 
-Во-первых, пришлось кое-что доустановить:
 cpanm Catalyst::Helper::Model::DBIC::Schema
 cpanm MooseX::NonMoose
 cpanm DBIx::Class::Migration
+cpanm Catalyst::Helper::View::TT
+cpanm Catalyst::View::JSON
+
+
+Версионирование базы
+--------------------
 
 Создание БД:
 

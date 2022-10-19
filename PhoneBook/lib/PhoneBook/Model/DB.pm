@@ -5,12 +5,13 @@ use base 'Catalyst::Model::DBIC::Schema';
 
 __PACKAGE__->config(
     schema_class => 'PhoneBook::Schema',
-    
-    connect_info => {
-        dsn => 'dbi:SQLite:db/phonebook-schema.db',
-        user => '',
-        password => '',
-    }
+
+    connect_info => [
+        'dbi:SQLite:db/phonebook-schema.db', '', '',
+        {
+            sqlite_unicode => 1,
+        }
+    ]
 );
 
 =head1 NAME

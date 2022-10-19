@@ -1,0 +1,16 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: #c6e39b;
+    font-size: 17px;
+}
+
+.container {
+    margin: 1rem auto;
+    max-width: 40rem;
+}
