@@ -9,6 +9,7 @@ BEGIN { extends 'Catalyst::Controller'; }
 Контроллер телефонной книги.
 Через него же можно получить JSON со списком записей этой книги.
 
+=encoding utf8
 =cut
 
 
@@ -37,6 +38,10 @@ sub records : GET Chained(book) {
     delete $c->stash->{template};
     $c->forward('PhoneBook::View::JSON');
 }
+
+# Я практически не понимаю, по какой логике работает Chained.
+# Приходится гадать, как сделать, чтобы фреймворк сделал адреса, которые мне нужны.
+# И в целом с этой фичей языка с двоеточием я не знаком.
 
 __PACKAGE__->meta->make_immutable;
 

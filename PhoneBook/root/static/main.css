@@ -12,5 +12,62 @@ body {
 
 .container {
     margin: 1rem auto;
+    padding: 0 1rem;
     max-width: 40rem;
+}
+
+.loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(50, 50, 50, 0.6);
+    z-index: 1000;
+}
+
+ul.errors {
+    list-style-type: square;
+}
+
+button.danger {
+    box-shadow: 0 0 0 1px red;
+}
+
+
+.toolbar {
+    margin-bottom: 1rem;
+}
+
+.book-record {
+    border: 3px dashed #739542;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    position: relative;
+}
+
+.book-record:hover {
+    background: #00000014;
+}
+
+.book-record.new {
+    background: #f9f9f9;
+}
+
+.book-record .actions {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+
+    box-sizing: border-box;
+    padding: 1rem;
+}
+
+.book-record .actions button:not(:last-of-type) {
+    margin-right: .4rem;
 }
