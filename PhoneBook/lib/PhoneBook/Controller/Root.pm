@@ -1,6 +1,7 @@
 package PhoneBook::Controller::Root;
 use Moose;
 use namespace::autoclean;
+use utf8;
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -32,7 +33,9 @@ sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
     # Hello World
-    $c->response->body( $c->welcome_message );
+    #$c->response->body( "Тест" );
+
+    $c->res->redirect('/book/1');
 }
 
 =head2 default
